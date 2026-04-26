@@ -162,10 +162,10 @@
 \renewcommand\cftsubsecpagefont{\宋体\四号}
 \renewcommand\cftsubsubsecfont{\宋体\四号}
 \renewcommand\cftsubsubsecpagefont{\宋体\四号}
-\setlength\cftparskip{7pt}
-\setlength\cftbeforesecskip{0bp}
-\setlength\cftsubsecindent{0bp}
-\setlength\cftsubsubsecindent{0bp}
+\setlength{\cftparskip}{7pt}
+\setlength{\cftbeforesecskip}{0bp}
+\setlength{\cftsubsecindent}{0bp}
+\setlength{\cftsubsubsecindent}{0bp}
 \setcounter{tocdepth}{3}
 
 % 超链接设置
@@ -210,6 +210,7 @@
         U\hfill D\hfill C\下划线[2.3cm]{} \hspace{0.45\textwidth} & 密级\下划线[2.3cm]{}
     \end{tabular}
     \vskip 1.05cm
+    \includegraphics[width=0.75\textwidth]{figures/logo/SUSTech-zh.pdf}
     \vskip 1.05cm
     {\粗体\宋体\小初 本科生毕业设计（论文）}
     \vskip 2.25cm
@@ -218,13 +219,13 @@
         题目： & \下划线[9cm]{\tTitle} \\[6pt]
         \ifdefempty{\tSubtitle}{}{\underline{\makebox[9cm][c]{\tSubtitle}} \\[20pt]}
         \ifdefempty{\tSubtitle}{\\[20pt]}{}
-姓名：& \下划线[9cm]{\tAuthor} \\[16pt]
+        姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
         学号： & \下划线[9cm]{\tStudentID} \\[16pt]
         院系： & \下划线[9cm]{\tDepartment} \\[16pt]
         专业： & \下划线[9cm]{\tMajor} \\[16pt]
         指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
     \end{tabular}
-}
+    }
 \end{center}
 \restoregeometry
 \clearpage
@@ -236,6 +237,7 @@
     CLC \underline{\makebox[2.3cm][c]{}} \hfill Number\underline{\makebox[2.3cm][c]{}} \\[5pt]
     UDC\underline{\makebox[2.3cm][c]{}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
     \vskip 1.8cm
+    \includegraphics[width=0.9\textwidth]{figures/logo/SUSTech-en.pdf}
     \vskip 1.6cm
     {\小初 Undergraduate Thesis}
     \vskip 2.7cm
@@ -250,7 +252,7 @@
         Program: & \underline{\makebox[9cm][c]{\tMajorEn}} \\[12pt]
         Thesis Advisor: & \underline{\makebox[9cm][c]{\tAdvisorEn}} \\[12pt]
     \end{tabular}
-}
+    }
 \end{center}
 \restoregeometry
 \clearpage
