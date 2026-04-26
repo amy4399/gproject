@@ -18,7 +18,7 @@
 \usepackage{caption}
 \usepackage{booktabs}
 \usepackage{subcaption}
-\usepackage{float}
+% \usepackage{float}  % 注释掉，和 floatrow 冲突
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{etoolbox}
@@ -55,7 +55,6 @@
 \IfFileExists{fonts/simsun.ttc}{
     \setCJKmainfont[
         Path=fonts/,
-        Fallback=simsunb.ttf,
         AutoFakeBold
     ]{simsun.ttc}
     \setCJKsansfont[
@@ -180,10 +179,8 @@
     pdflang=zh-CN,
 }
 
-% 下划线命令（用于封面）
-\makeatletter
-\newcommand\下划线[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
-\makeatother
+% 下划线命令（用于封面）- 简化版，不用 @
+\newcommand\下划线[2][6em]{\underline{\makebox[#1][c]{#2}}}
 
 % ========== 论文信息填写区 ==========
 \newcommand{\tTitle}{南方科技大学毕业论文题目}
@@ -219,15 +216,15 @@
     {\粗体\宋体\三号
     \begin{tabular}{rl}
         题目： & \下划线[9cm]{\tTitle} \\[6pt]
-        \ifdefempty{\tSubtitle}{}{\underline{\hb@xt@ 9cm{\hss\tSubtitle\hss}} \\[20pt]}
+        \ifdefempty{\tSubtitle}{}{\underline{\makebox[9cm][c]{\tSubtitle}} \\[20pt]}
         \ifdefempty{\tSubtitle}{\\[20pt]}{}
-        姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
+姓名：& \下划线[9cm]{\tAuthor} \\[16pt]
         学号： & \下划线[9cm]{\tStudentID} \\[16pt]
         院系： & \下划线[9cm]{\tDepartment} \\[16pt]
         专业： & \下划线[9cm]{\tMajor} \\[16pt]
         指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
     \end{tabular}
-    }
+}
 \end{center}
 \restoregeometry
 \clearpage
@@ -236,24 +233,24 @@
 \thispagestyle{empty}
 \newgeometry{top=2.54cm,bottom=2.75cm,left=2.54cm,right=2.48cm}
 \begin{center}
-    CLC \underline{\hb@xt@ 2.3cm{\hss\hss}} \hfill Number\underline{\hb@xt@ 2.3cm{\hss\hss}} \\[5pt]
-    UDC\underline{\hb@xt@ 2.3cm{\hss\hss}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
+    CLC \underline{\makebox[2.3cm][c]{}} \hfill Number\underline{\makebox[2.3cm][c]{}} \\[5pt]
+    UDC\underline{\makebox[2.3cm][c]{}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
     \vskip 1.8cm
     \vskip 1.6cm
     {\小初 Undergraduate Thesis}
     \vskip 2.7cm
     {\粗体\三号
     \begin{tabular}{rl}
-        Thesis Title: & \underline{\hb@xt@ 9cm{\hss\tTitleEn\hss}} \\[12pt]
-        \ifdefempty{\tSubtitleEn}{}{\underline{\hb@xt@ 9cm{\hss\tSubtitleEn\hss}} \\[15pt]}
+        Thesis Title: & \underline{\makebox[9cm][c]{\tTitleEn}} \\[12pt]
+        \ifdefempty{\tSubtitleEn}{}{\underline{\makebox[9cm][c]{\tSubtitleEn}} \\[15pt]}
         \ifdefempty{\tSubtitleEn}{\\[15pt]}{}
-        Student Name: & \underline{\hb@xt@ 9cm{\hss\tAuthor\hss}} \\[12pt]
-        Student ID: & \underline{\hb@xt@ 9cm{\hss\tStudentID\hss}} \\[12pt]
-        Department: & \underline{\hb@xt@ 9cm{\hss\tDepartmentEn\hss}} \\[12pt]
-        Program: & \underline{\hb@xt@ 9cm{\hss\tMajorEn\hss}} \\[12pt]
-        Thesis Advisor: & \underline{\hb@xt@ 9cm{\hss\tAdvisorEn\hss}} \\[12pt]
+        Student Name: & \underline{\makebox[9cm][c]{\tAuthor}} \\[12pt]
+        Student ID: & \underline{\makebox[9cm][c]{\tStudentID}} \\[12pt]
+        Department: & \underline{\makebox[9cm][c]{\tDepartmentEn}} \\[12pt]
+        Program: & \underline{\makebox[9cm][c]{\tMajorEn}} \\[12pt]
+        Thesis Advisor: & \underline{\makebox[9cm][c]{\tAdvisorEn}} \\[12pt]
     \end{tabular}
-    }
+}
 \end{center}
 \restoregeometry
 \clearpage
@@ -274,8 +271,8 @@
 
     \vskip 4.55cm
     \begin{flushright}
-        \makebox[11em][l]{作者签名:}\\
-        \makebox[11em][l]{\下划线[2cm]{}年\下划线[1cm]{}月\下划线[1cm]{}日}
+        \makebox[11em][l]{作者签名：} \\
+        \makebox[11em][l]{\underline{\makebox[2cm][c]{}}年\underline{\makebox[1cm][c]{}}月\underline{\makebox[1cm][c]{}}日}
     \end{flushright}
 \end{spacing}
 \restoregeometry
@@ -316,12 +313,12 @@
 \end{center}
 \vskip 1.5cm
 \begin{spacing}{1.45}
-    \noindent\三号 [ABSTRACT]:
+    \noindent\三号 [ABSTRACT]：
     \四号
     Enter your English abstract content here. The abstract should summarize the purpose, methods, results, and conclusions of the thesis.
 
     \vfill
-    \noindent\三号 [Keywords]:
+    \noindent\三号 [Keywords]：
     \四号 \tKeywordsEn
 \end{spacing}
 \clearpage
@@ -339,7 +336,7 @@
 在此处输入引言内容。介绍研究背景、目的和意义。
 
 \section{相关工作}
-在此处介绍相关领域的研究现状。可以使用~\cite{knuth1984} 引用参考文献。
+在此处介绍相关领域的研究现状。可以使用~\cite{knuth1984}引用参考文献。
 
 \section{方法}
 在此处介绍你的研究方法。
