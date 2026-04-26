@@ -18,7 +18,7 @@
 \usepackage{caption}
 \usepackage{booktabs}
 \usepackage{subcaption}
-% \usepackage{float}  % 注释掉，和 floatrow 冲突
+\usepackage{floatrow}
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{etoolbox}
@@ -121,23 +121,31 @@
 \renewcommand{\headrulewidth}{0bp}
 \renewcommand{\footrulewidth}{0bp}
 
-% 图表标题格式
+% ================ 脚注格式设置 ================
+% 脚注字号小五，中文宋体英文Times New Roman
+\renewcommand{\footnotesize}{\五号}
+\let\oldfootnote\footnote
+\renewcommand{\footnote}[1]{\oldfootnote{\songti#1}}
+
+% ================ 图表格式设置 ================
+% 图题、表题格式：中文黑体五号加粗，英文Times New Roman五号加粗，居中
+% 表序表题之间空一格，不加标点
 \DeclareCaptionLabelSeparator{enspace}{\enspace}
 \DeclareCaptionLabelFormat{rightBracket}{#2)}
 \renewcommand{\captionfont}{\bfseries\songti\五号}
-\captionsetup[subfigure]{labelformat=rightBracket, labelsep=enspace}
-\captionsetup[table]{labelsep=enspace}
-\captionsetup[figure]{labelsep=enspace}
+\captionsetup{labelsep=enspace} % 表序表题之间空一格
+\captionsetup[subfigure]{labelformat=rightBracket, labelsep=enspace} % 子图a,b,c外没有括号
+\captionsetup[table]{capposition=top} % 表题在上方
+\captionsetup[figure]{capposition=bottom} % 图题在下方
 \ctexset{
     figurename = {图},
-    tablename = {表},
+    tablename  = {表},
     listfigurename = {插图},
     listtablename = {表格},
     proofname = {证明},
 }
 
-% 浮动体设置
-\usepackage{floatrow}
+% 浮动体内字体五号
 \DeclareFloatFont{floatfont}{\五号}
 \floatsetup[table]{
     capposition = top,
@@ -179,7 +187,7 @@
     pdflang=zh-CN,
 }
 
-% 下划线命令（用于封面）- 简化版，不用 @
+% 下划线命令（用于封面）- 简化版，不用@
 \newcommand\下划线[2][6em]{\underline{\makebox[#1][c]{#2}}}
 
 % ========== 论文信息填写区 ==========
@@ -201,84 +209,86 @@
 
 \begin{document}
 
+% ========= 以下封面部分暂时注释，最后用 Word 做封面 ==========
 % 中文封面
-\thispagestyle{empty}
-\newgeometry{top=2.25cm,bottom=2.25cm,left=2.54cm,right=2.48cm}
-\begin{center}
-    \begin{tabular}{llr}
-        分类号 \下划线[2.3cm]{} \hspace{0.45\textwidth} & 编号\下划线[2.3cm]{} \\[15pt]
-        U\hfill D\hfill C\下划线[2.3cm]{} \hspace{0.45\textwidth} & 密级\下划线[2.3cm]{}
-    \end{tabular}
-    \vskip 1.05cm
-    \includegraphics[width=0.75\textwidth]{figures/logo/SUSTech-zh.pdf}
-    \vskip 1.05cm
-    {\粗体\宋体\小初 本科生毕业设计（论文）}
-    \vskip 2.25cm
-    {\粗体\宋体\三号
-    \begin{tabular}{rl}
-        题目： & \下划线[9cm]{\tTitle} \\[6pt]
-        \ifdefempty{\tSubtitle}{}{\underline{\makebox[9cm][c]{\tSubtitle}} \\[20pt]}
-        \ifdefempty{\tSubtitle}{\\[20pt]}{}
-        姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
-        学号： & \下划线[9cm]{\tStudentID} \\[16pt]
-        院系： & \下划线[9cm]{\tDepartment} \\[16pt]
-        专业： & \下划线[9cm]{\tMajor} \\[16pt]
-        指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
-    \end{tabular}
-    }
-\end{center}
-\restoregeometry
-\clearpage
-
-% 英文封面
-\thispagestyle{empty}
-\newgeometry{top=2.54cm,bottom=2.75cm,left=2.54cm,right=2.48cm}
-\begin{center}
-    CLC \underline{\makebox[2.3cm][c]{}} \hfill Number\underline{\makebox[2.3cm][c]{}} \\[5pt]
-    UDC\underline{\makebox[2.3cm][c]{}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
-    \vskip 1.8cm
-    \includegraphics[width=0.9\textwidth]{figures/logo/SUSTech-en.pdf}
-    \vskip 1.6cm
-    {\小初 Undergraduate Thesis}
-    \vskip 2.7cm
-    {\粗体\三号
-    \begin{tabular}{rl}
-        Thesis Title: & \underline{\makebox[9cm][c]{\tTitleEn}} \\[12pt]
-        \ifdefempty{\tSubtitleEn}{}{\underline{\makebox[9cm][c]{\tSubtitleEn}} \\[15pt]}
-        \ifdefempty{\tSubtitleEn}{\\[15pt]}{}
-        Student Name: & \underline{\makebox[9cm][c]{\tAuthor}} \\[12pt]
-        Student ID: & \underline{\makebox[9cm][c]{\tStudentID}} \\[12pt]
-        Department: & \underline{\makebox[9cm][c]{\tDepartmentEn}} \\[12pt]
-        Program: & \underline{\makebox[9cm][c]{\tMajorEn}} \\[12pt]
-        Thesis Advisor: & \underline{\makebox[9cm][c]{\tAdvisorEn}} \\[12pt]
-    \end{tabular}
-    }
-\end{center}
-\restoregeometry
-\clearpage
-
-% 诚信承诺书
-\thispagestyle{empty}
-\newgeometry{top=2.74cm,bottom=2.54cm,left=3.17cm,right=3.17cm}
-\begin{center}
-    {\bfseries\黑体\二号 诚信承诺}
-\end{center}
-\vskip 1.65cm
-\begin{spacing}{1.85}\宋体\四号
-    1.本人郑重承诺所呈交的毕业设计（论文），是在导师的指导下，独立进行研究工作所取得的成果，所有数据、图片资料均真实可靠。\par
-    2.除文中已经注明引用的内容外，本论文不包含任何其他人或集体已经发表或撰写过的作品或成果。
-    对本论文的研究作出重要贡献的个人和集体，均已在文中以明确的方式标明。\par
-    3.本人承诺在毕业论文（设计）选题和研究内容过程中没有抄袭他人研究成果和伪造相关数据等行为。\par
-    4.在毕业论文（设计）中对侵犯任何方面知识产权的行为，由本人承担相应的法律责任。
-
-    \vskip 4.55cm
-    \begin{flushright}
-        \makebox[11em][l]{作者签名：} \\
-        \makebox[11em][l]{\underline{\makebox[2cm][c]{}}年\underline{\makebox[1cm][c]{}}月\underline{\makebox[1cm][c]{}}日}
-    \end{flushright}
-\end{spacing}
-\restoregeometry
-\clearpage
+% \thispagestyle{empty}
+% \newgeometry{top=2.25cm,bottom=2.25cm,left=2.54cm,right=2.48cm}
+% \begin{center}
+%     \begin{tabular}{llr}
+%         分类号 \下划线[2.3cm]{} \hspace{0.45\textwidth} & 编号\下划线[2.3cm]{} \\[15pt]
+%         U\hfill D\hfill C\下划线[2.3cm]{} \hspace{0.45\textwidth} & 密级\下划线[2.3cm]{}
+%     \end{tabular}
+%     \vskip 1.05cm
+%     \includegraphics[width=0.75\textwidth]{figures/logo/SUSTech-zh.pdf}
+%     \vskip 1.05cm
+%     {\粗体\宋体\小初 本科生毕业设计（论文）}
+%     \vskip 2.25cm
+%     {\粗体\宋体\三号
+%     \begin{tabular}{rl}
+%         题目： & \下划线[9cm]{\tTitle} \\[6pt]
+%         \ifdefempty{\tSubtitle}{}{\underline{\makebox[9cm][c]{\tSubtitle}} \\[20pt]}
+%         \ifdefempty{\tSubtitle}{\\[20pt]}{}
+%         姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
+%         学号： & \下划线[9cm]{\tStudentID} \\[16pt]
+%         院系： & \下划线[9cm]{\tDepartment} \\[16pt]
+%         专业： & \下划线[9cm]{\tMajor} \\[16pt]
+%         指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
+%     \end{tabular}
+%     }
+% \end{center}
+% \restoregeometry
+% \clearpage
+%
+% % 英文封面
+% \thispagestyle{empty}
+% \newgeometry{top=2.54cm,bottom=2.75cm,left=2.54cm,right=2.48cm}
+% \begin{center}
+%     CLC \underline{\makebox[2.3cm][c]{}} \hfill Number\underline{\makebox[2.3cm][c]{}} \\[5pt]
+%     UDC\underline{\makebox[2.3cm][c]{}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
+%     \vskip 1.8cm
+%     \includegraphics[width=0.9\textwidth]{figures/logo/SUSTech-en.pdf}
+%     \vskip 1.6cm
+%     {\小初 Undergraduate Thesis}
+%     \vskip 2.7cm
+%     {\粗体\三号
+%     \begin{tabular}{rl}
+%         Thesis Title: & \underline{\makebox[9cm][c]{\tTitleEn}} \\[12pt]
+%         \ifdefempty{\tSubtitleEn}{}{\underline{\makebox[9cm][c]{\tSubtitleEn}} \\[15pt]}
+%         \ifdefempty{\tSubtitleEn}{\\[15pt]}{}
+%         Student Name: & \underline{\makebox[9cm][c]{\tAuthor}} \\[12pt]
+%         Student ID: & \underline{\makebox[9cm][c]{\tStudentID}} \\[12pt]
+%         Department: & \underline{\makebox[9cm][c]{\tDepartmentEn}} \\[12pt]
+%         Program: & \underline{\makebox[9cm][c]{\tMajorEn}} \\[12pt]
+%         Thesis Advisor: & \underline{\makebox[9cm][c]{\tAdvisorEn}} \\[12pt]
+%     \end{tabular}
+%     }
+% \end{center}
+% \restoregeometry
+% \clearpage
+%
+% % 诚信承诺书
+% \thispagestyle{empty}
+% \newgeometry{top=2.74cm,bottom=2.54cm,left=3.17cm,right=3.17cm}
+% \begin{center}
+%     {\bfseries\黑体\二号 诚信承诺}
+% \end{center}
+% \vskip 1.65cm
+% \begin{spacing}{1.85}\宋体\四号
+%     1.本人郑重承诺所呈交的毕业设计（论文），是在导师的指导下，独立进行研究工作所取得的成果，所有数据、图片资料均真实可靠。\par
+%     2.除文中已经注明引用的内容外，本论文不包含任何其他人或集体已经发表或撰写过的作品或成果。
+%     对本论文的研究作出重要贡献的个人和集体，均已在文中以明确的方式标明。\par
+%     3.本人承诺在毕业论文（设计）选题和研究内容过程中没有抄袭他人研究成果和伪造相关数据等行为。\par
+%     4.在毕业论文（设计）中对侵犯任何方面知识产权的行为，由本人承担相应的法律责任。
+%
+%     \vskip 4.55cm
+%     \begin{flushright}
+%         \makebox[11em][l]{作者签名：} \\
+%         \makebox[11em][l]{\underline{\makebox[2cm][c]{}}年\underline{\makebox[1cm][c]{}}月\underline{\makebox[1cm][c]{}}日}
+%     \end{flushright}
+% \end{spacing}
+% \restoregeometry
+% \clearpage
+% ===================================================================
 
 % 罗马数字页码
 \pagenumbering{Roman}
@@ -335,7 +345,7 @@
 \setcounter{page}{1}
 
 \section{引言}
-在此处输入引言内容。介绍研究背景、目的和意义。
+在此处输入引言内容。介绍研究背景、目的和意义。\footnote{这是一个脚注示例，用来补充说明正文内容。脚注字号小五，中文宋体英文Times New Roman。}
 
 \section{相关工作}
 在此处介绍相关领域的研究现状。可以使用~\cite{knuth1984}引用参考文献。
@@ -350,13 +360,69 @@
 介绍实现过程中的关键细节。
 
 \section{实验结果与分析}
-在此处展示实验结果并进行分析。
+在此处展示实验结果并进行分析。表格与图片可以通过 \verb|\ref{<key>}| 来引用，例如表~\ref{table1}、表~\ref{table2}、图~\ref{fig1}。
 
 \subsection{实验设置}
 介绍实验的设置和环境。
 
 \subsection{结果分析}
 分析实验结果。
+
+\begin{table}[htb]
+  \centering
+  \caption{表格标题在上方，表序表题之间空一格，不加标点}
+  \label{table1}
+  \begin{tabular}{lc}
+    \toprule
+    Example & Result \\
+    \midrule
+    Example1          & 0.25 \\
+    Example2          & 0.36 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htb]
+  \centering
+  \caption{带表注的表格}
+  \label{table2}
+  \begin{threeparttable}
+    \setlength{\tabcolsep}{0.6cm}{
+      \begin{tabular}{lc}
+        \toprule
+        Example & Result \\
+        \midrule
+        Example1          & 0.25\tnote{1} \\
+        Example2          & 0.36 \\
+        \bottomrule
+      \end{tabular}
+    }
+    \begin{tablenotes}
+    \item[1] 数据来源：南方科技大学
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.5\textwidth]{example-image-a}
+  \caption{图片标题在下方，图序图题之间空一格，不加标点}\label{fig1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=1\textwidth]{example-image-a}
+    \caption{子图标题1}\label{fig2a}
+  \end{subfigure}
+  \begin{subfigure}[t]{.45\linewidth}
+    \centering
+    \includegraphics[width=1\textwidth]{example-image-b}
+    \caption{子图标题2}\label{fig2b}
+  \end{subfigure}
+  \caption{包含子图的图片，子图用a、b、c标序}\label{fig2}
+\end{figure}
 
 \section{结论}
 总结你的工作，并展望未来的研究方向。
