@@ -18,8 +18,7 @@
 \usepackage{caption}
 \usepackage{booktabs}
 \usepackage{subcaption}
-\usepackage{floatrow}
-\usepackage{threeparttable}
+\usepackage{float}
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{etoolbox}
@@ -56,6 +55,7 @@
 \IfFileExists{fonts/simsun.ttc}{
     \setCJKmainfont[
         Path=fonts/,
+        Fallback=simsunb.ttf,
         AutoFakeBold
     ]{simsun.ttc}
     \setCJKsansfont[
@@ -96,7 +96,7 @@
 % 章节标题格式
 \ctexset{
     section = {
-        name={{},.},
+        name={},
         format={\黑体\三号},
     },
     subsection = {
@@ -118,33 +118,27 @@
 % 页眉页脚设置
 \pagestyle{fancy}
 \lhead{}\chead{}\rhead{}\lfoot{}\rfoot{}
-\cfoot{\五号\thepage}
+\cfoot{\rmfamily\五号\thepage}
 \renewcommand{\headrulewidth}{0bp}
 \renewcommand{\footrulewidth}{0bp}
 
-% ================ 脚注格式设置 ================
-% 脚注字号小五，中文宋体英文Times New Roman
-\renewcommand{\footnotesize}{\五号}
-\let\oldfootnote\footnote
-\renewcommand{\footnote}[1]{\oldfootnote{\songti#1}}
-
-% ================ 图表格式设置 ================
-% 图题、表题格式：中文黑体五号加粗，英文Times New Roman五号加粗，居中
-% 表序表题之间空一格，不加标点
+% 图表标题格式
 \DeclareCaptionLabelSeparator{enspace}{\enspace}
 \DeclareCaptionLabelFormat{rightBracket}{#2)}
 \renewcommand{\captionfont}{\bfseries\songti\五号}
-\captionsetup{labelsep=enspace} % 表序表题之间空一格
-\captionsetup[subfigure]{labelformat=rightBracket, labelsep=enspace} % 子图a,b,c外没有括号
+\captionsetup[subfigure]{labelformat=rightBracket, labelsep=enspace}
+\captionsetup[table]{labelsep=enspace}
+\captionsetup[figure]{labelsep=enspace}
 \ctexset{
     figurename = {图},
-    tablename  = {表},
+    tablename = {表},
     listfigurename = {插图},
     listtablename = {表格},
     proofname = {证明},
 }
 
-% 浮动体内字体五号，表题在上，图题在下
+% 浮动体设置
+\usepackage{floatrow}
 \DeclareFloatFont{floatfont}{\五号}
 \floatsetup[table]{
     capposition = top,
@@ -169,10 +163,10 @@
 \renewcommand\cftsubsecpagefont{\宋体\四号}
 \renewcommand\cftsubsubsecfont{\宋体\四号}
 \renewcommand\cftsubsubsecpagefont{\宋体\四号}
-\setlength{\cftparskip}{7pt}
-\setlength{\cftbeforesecskip}{0bp}
-\setlength{\cftsubsecindent}{0bp}
-\setlength{\cftsubsubsecindent}{0bp}
+\setlength\cftparskip{7pt}
+\setlength\cftbeforesecskip{0bp}
+\setlength\cftsubsecindent{0bp}
+\setlength\cftsubsubsecindent{0bp}
 \setcounter{tocdepth}{3}
 
 % 超链接设置
@@ -186,14 +180,16 @@
     pdflang=zh-CN,
 }
 
-% 下划线命令（用于封面）- 简化版，不用@
-\newcommand\下划线[2][6em]{\underline{\makebox[#1][c]{#2}}}
+% 下划线命令（用于封面）
+\makeatletter
+\newcommand\下划线[2][6em]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
+\makeatother
 
 % ========== 论文信息填写区 ==========
-\newcommand{\tTitle}{南方科技大学毕业论文题目}
-\newcommand{\tTitleEn}{Undergraduate Thesis Title}
-\newcommand{\tSubtitle}{副标题（如无则留空）}
-\newcommand{\tSubtitleEn}{Subtitle (optional)}
+\newcommand{\tTitle}{全球热浪异常特征及城市热点重心移动研究}
+\newcommand{\tTitleEn}{Global Heatwave Anomaly Characteristics and Urban Hotspot Centroid Shift Research}
+\newcommand{\tSubtitle}{}
+\newcommand{\tSubtitleEn}{}
 \newcommand{\tAuthor}{你的姓名}
 \newcommand{\tStudentID}{12345678}
 \newcommand{\tDepartment}{某某系}
@@ -202,92 +198,88 @@
 \newcommand{\tMajorEn}{XXX Program}
 \newcommand{\tAdvisor}{指导教师姓名}
 \newcommand{\tAdvisorEn}{Advisor Name}
-\newcommand{\tKeywords}{关键词1；关键词2；关键词3}
-\newcommand{\tKeywordsEn}{Keyword1, Keyword2, Keyword3}
+\newcommand{\tKeywords}{热浪异常；城市热点；重心移动；气温分类；气候变化}
+\newcommand{\tKeywordsEn}{Heatwave anomaly; Urban hotspot; Centroid movement; Temperature classification; Climate change}
 % =====================================
 
 \begin{document}
 
-% ========= 以下封面部分暂时注释，最后用 Word 做封面 ==========
 % 中文封面
-% \thispagestyle{empty}
-% \newgeometry{top=2.25cm,bottom=2.25cm,left=2.54cm,right=2.48cm}
-% \begin{center}
-%     \begin{tabular}{llr}
-%         分类号 \下划线[2.3cm]{} \hspace{0.45\textwidth} & 编号\下划线[2.3cm]{} \\[15pt]
-%         U\hfill D\hfill C\下划线[2.3cm]{} \hspace{0.45\textwidth} & 密级\下划线[2.3cm]{}
-%     \end{tabular}
-%     \vskip 1.05cm
-%     \includegraphics[width=0.75\textwidth]{figures/logo/SUSTech-zh.pdf}
-%     \vskip 1.05cm
-%     {\粗体\宋体\小初 本科生毕业设计（论文）}
-%     \vskip 2.25cm
-%     {\粗体\宋体\三号
-%     \begin{tabular}{rl}
-%         题目： & \下划线[9cm]{\tTitle} \\[6pt]
-%         \ifdefempty{\tSubtitle}{}{\underline{\makebox[9cm][c]{\tSubtitle}} \\[20pt]}
-%         \ifdefempty{\tSubtitle}{\\[20pt]}{}
-%         姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
-%         学号： & \下划线[9cm]{\tStudentID} \\[16pt]
-%         院系： & \下划线[9cm]{\tDepartment} \\[16pt]
-%         专业： & \下划线[9cm]{\tMajor} \\[16pt]
-%         指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
-%     \end{tabular}
-%     }
-% \end{center}
-% \restoregeometry
-% \clearpage
-%
-% % 英文封面
-% \thispagestyle{empty}
-% \newgeometry{top=2.54cm,bottom=2.75cm,left=2.54cm,right=2.48cm}
-% \begin{center}
-%     CLC \underline{\makebox[2.3cm][c]{}} \hfill Number\underline{\makebox[2.3cm][c]{}} \\[5pt]
-%     UDC\underline{\makebox[2.3cm][c]{}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
-%     \vskip 1.8cm
-%     \includegraphics[width=0.9\textwidth]{figures/logo/SUSTech-en.pdf}
-%     \vskip 1.6cm
-%     {\小初 Undergraduate Thesis}
-%     \vskip 2.7cm
-%     {\粗体\三号
-%     \begin{tabular}{rl}
-%         Thesis Title: & \underline{\makebox[9cm][c]{\tTitleEn}} \\[12pt]
-%         \ifdefempty{\tSubtitleEn}{}{\underline{\makebox[9cm][c]{\tSubtitleEn}} \\[15pt]}
-%         \ifdefempty{\tSubtitleEn}{\\[15pt]}{}
-%         Student Name: & \underline{\makebox[9cm][c]{\tAuthor}} \\[12pt]
-%         Student ID: & \underline{\makebox[9cm][c]{\tStudentID}} \\[12pt]
-%         Department: & \underline{\makebox[9cm][c]{\tDepartmentEn}} \\[12pt]
-%         Program: & \underline{\makebox[9cm][c]{\tMajorEn}} \\[12pt]
-%         Thesis Advisor: & \underline{\makebox[9cm][c]{\tAdvisorEn}} \\[12pt]
-%     \end{tabular}
-%     }
-% \end{center}
-% \restoregeometry
-% \clearpage
-%
-% % 诚信承诺书
-% \thispagestyle{empty}
-% \newgeometry{top=2.74cm,bottom=2.54cm,left=3.17cm,right=3.17cm}
-% \begin{center}
-%     {\bfseries\黑体\二号 诚信承诺}
-% \end{center}
-% \vskip 1.65cm
-% \begin{spacing}{1.85}\宋体\四号
-%     1.本人郑重承诺所呈交的毕业设计（论文），是在导师的指导下，独立进行研究工作所取得的成果，所有数据、图片资料均真实可靠。\par
-%     2.除文中已经注明引用的内容外，本论文不包含任何其他人或集体已经发表或撰写过的作品或成果。
-%     对本论文的研究作出重要贡献的个人和集体，均已在文中以明确的方式标明。\par
-%     3.本人承诺在毕业论文（设计）选题和研究内容过程中没有抄袭他人研究成果和伪造相关数据等行为。\par
-%     4.在毕业论文（设计）中对侵犯任何方面知识产权的行为，由本人承担相应的法律责任。
-%
-%     \vskip 4.55cm
-%     \begin{flushright}
-%         \makebox[11em][l]{作者签名：} \\
-%         \makebox[11em][l]{\underline{\makebox[2cm][c]{}}年\underline{\makebox[1cm][c]{}}月\underline{\makebox[1cm][c]{}}日}
-%     \end{flushright}
-% \end{spacing}
-% \restoregeometry
-% \clearpage
-% ===================================================================
+\thispagestyle{empty}
+\newgeometry{top=2.25cm,bottom=2.25cm,left=2.54cm,right=2.48cm}
+\begin{center}
+    \begin{tabular}{llr}
+        分类号 \下划线[2.3cm]{} \hspace{0.45\textwidth} & 编号\下划线[2.3cm]{} \\[15pt]
+        U\hfill D\hfill C\underline{\hb@xt@ 2.3cm{\hss\hss}} \hspace{0.45\textwidth} & 密级\下划线[2.3cm]{}
+    \end{tabular}
+    \vskip 1.05cm
+    \vskip 1.05cm
+    {\粗体\宋体\小初 本科生毕业设计（论文）}
+    \vskip 2.25cm
+    {\粗体\宋体\三号
+    \begin{tabular}{rl}
+        题目： & \下划线[9cm]{\tTitle} \\[6pt]
+        \ifdefempty{\tSubtitle}{}{\underline{\hb@xt@ 9cm{\hss\tSubtitle\hss}} \\[20pt]}
+        \ifdefempty{\tSubtitle}{\\[20pt]}{}
+        姓名： & \下划线[9cm]{\tAuthor} \\[16pt]
+        学号： & \下划线[9cm]{\tStudentID} \\[16pt]
+        院系： & \下划线[9cm]{\tDepartment} \\[16pt]
+        专业： & \下划线[9cm]{\tMajor} \\[16pt]
+        指导教师： & \下划线[9cm]{\tAdvisor} \\[16pt]
+    \end{tabular}
+    }
+\end{center}
+\restoregeometry
+\clearpage
+
+% 英文封面
+\thispagestyle{empty}
+\newgeometry{top=2.54cm,bottom=2.75cm,left=2.54cm,right=2.48cm}
+\begin{center}
+    CLC \underline{\hb@xt@ 2.3cm{\hss\hss}} \hfill Number\underline{\hb@xt@ 2.3cm{\hss\hss}} \\[5pt]
+    UDC\underline{\hb@xt@ 2.3cm{\hss\hss}} \hfill Available for reference~\quad$\square$Yes~\quad$\square$No
+    \vskip 1.8cm
+    \vskip 1.6cm
+    {\小初 Undergraduate Thesis}
+    \vskip 2.7cm
+    {\粗体\三号
+    \begin{tabular}{rl}
+        Thesis Title: & \underline{\hb@xt@ 9cm{\hss\tTitleEn\hss}} \\[12pt]
+        \ifdefempty{\tSubtitleEn}{}{\underline{\hb@xt@ 9cm{\hss\tSubtitleEn\hss}} \\[15pt]}
+        \ifdefempty{\tSubtitleEn}{\\[15pt]}{}
+        Student Name: & \underline{\hb@xt@ 9cm{\hss\tAuthor\hss}} \\[12pt]
+        Student ID: & \underline{\hb@xt@ 9cm{\hss\tStudentID\hss}} \\[12pt]
+        Department: & \underline{\hb@xt@ 9cm{\hss\tDepartmentEn\hss}} \\[12pt]
+        Program: & \underline{\hb@xt@ 9cm{\hss\tMajorEn\hss}} \\[12pt]
+        Thesis Advisor: & \underline{\hb@xt@ 9cm{\hss\tAdvisorEn\hss}} \\[12pt]
+    \end{tabular}
+    }
+\end{center}
+\restoregeometry
+\clearpage
+
+% 诚信承诺书
+\thispagestyle{empty}
+\newgeometry{top=2.74cm,bottom=2.54cm,left=3.17cm,right=3.17cm}
+\begin{center}
+    {\bfseries\黑体\二号 诚信承诺}
+\end{center}
+\vskip 1.65cm
+\begin{spacing}{1.85}\宋体\四号
+    1.本人郑重承诺所呈交的毕业设计（论文），是在导师的指导下，独立进行研究工作所取得的成果，所有数据、图片资料均真实可靠。\par
+    2.除文中已经注明引用的内容外，本论文不包含任何其他人或集体已经发表或撰写过的作品或成果。
+    对本论文的研究作出重要贡献的个人和集体，均已在文中以明确的方式标明。\par
+    3.本人承诺在毕业论文（设计）选题和研究内容过程中没有抄袭他人研究成果和伪造相关数据等行为。\par
+    4.在毕业论文（设计）中对侵犯任何方面知识产权的行为，由本人承担相应的法律责任。
+
+    \vskip 4.55cm
+    \begin{flushright}
+        \makebox[11em][l]{作者签名:}\\
+        \makebox[11em][l]{\下划线[2cm]{}年\下划线[1cm]{}月\下划线[1cm]{}日}
+    \end{flushright}
+\end{spacing}
+\restoregeometry
+\clearpage
 
 % 罗马数字页码
 \pagenumbering{Roman}
@@ -309,8 +301,7 @@
 \begin{spacing}{1.45}
     \noindent\黑体\三号 [摘要]：
     \宋体\四号
-    在此处输入中文摘要内容。摘要应概括论文的目的、方法、结果和结论，语言精炼准确。
-    摘要通常不分段，顶格开始书写。
+    全球气候变暖背景下，极端高温事件频发，但热浪异常的空间分布特征及其动态演变规律尚缺乏系统性量化认知。本研究基于ERA5-Land再分析数据与联合国城市数据，对1978–2025年全球热浪异常特征及北半球164个主要城市热点的重心移动规律进行了系统分析。结果表明：全球热浪异常呈现显著的空间异质性，北美西部、地中海北岸及阿拉伯半岛等地热浪显著增加，而北美中东部及印度部分地区受气溶胶与灌溉冷却效应影响呈现异常减少；在城市尺度上，热浪热点重心呈现显著的"向西、略向南"移动趋势，且强度重心的移动速率快于频数重心；此外，全球城市气温变化模式可分为五类，其中持续增温型（A类）占主导地位，而印度次大陆城市因人为冷却机制表现出先降后增或持续降温等特殊模式。本研究揭示了全球热浪风险的动态转移特征，为理解气候变化背景下的城市适应性策略提供了科学依据。
 
     \vfill
     \noindent\黑体\三号 [关键词]：
@@ -320,17 +311,17 @@
 
 % 英文摘要
 \begin{center}
-    \二号 \tTitleEn
+    \rmfamily\bfseries\二号 \tTitleEn
 \end{center}
 \vskip 1.5cm
 \begin{spacing}{1.45}
-    \noindent\三号 [ABSTRACT]：
-    \四号
-    Enter your English abstract content here. The abstract should summarize the purpose, methods, results, and conclusions of the thesis.
+    \noindent\rmfamily\bfseries\三号 [ABSTRACT]：
+    \rmfamily\四号
+    Against the backdrop of global warming, extreme heatwaves are occurring frequently. However, the spatial distribution characteristics of heatwave anomalies and their dynamic evolution patterns lack systematic quantitative understanding. Based on ERA5-Land reanalysis data and UN urban data, this study systematically analyzes the global heatwave anomaly characteristics and the centroid movement patterns of hotspots in 164 major cities in the Northern Hemisphere from 1978 to 2025. The results indicate that global heatwave anomalies exhibit significant spatial heterogeneity: heatwaves have significantly increased in western North America, the northern Mediterranean, and the Arabian Peninsula, while regions such as the central-eastern United States and parts of India show anomalous decreases due to aerosol and irrigation cooling effects. At the urban scale, the heatwave hotspot centroids show a significant "westward and slight southward" movement trend, with the intensity centroid moving faster than the frequency centroid. Furthermore, global urban temperature change patterns can be classified into five types. Among them, the continuous warming type (Type A) dominates, while cities on the Indian subcontinent exhibit special patterns such as decreasing-then-increasing or continuous cooling due to anthropogenic cooling mechanisms. This study reveals the dynamic transfer characteristics of global heatwave risks, providing a scientific basis for urban adaptation strategies under climate change.
 
     \vfill
-    \noindent\三号 [Keywords]：
-    \四号 \tKeywordsEn
+    \noindent\rmfamily\bfseries\三号 [Key words]：
+    \rmfamily\四号 \tKeywordsEn
 \end{spacing}
 \clearpage
 
@@ -344,109 +335,586 @@
 \setcounter{page}{1}
 
 \section{引言}
-在此处输入引言内容。介绍研究背景、目的和意义。\footnote{这是一个脚注示例，用来补充说明正文内容。脚注字号小五，中文宋体英文Times New Roman。}
 
-\section{相关工作}
-在此处介绍相关领域的研究现状。可以使用~\cite{knuth1984}引用参考文献。
+\subsection{研究背景}
 
-\section{方法}
-在此处介绍你的研究方法。
+全球气候系统的变暖正以前所未有的速率演进，极端高温事件已成为21世纪人类面临的严峻挑战。根据政府间气候变化专门委员会（IPCC）第六次评估报告，全球地表平均温度的持续上升直接导致了极端天气气候事件频率和强度的显著增加~\cite{ipcc2021}。值得注意的是，\textbf{极端高温的增幅往往远超平均升温水平}，在许多陆地区域，极端高温的增幅达到了平均升温的\textbf{2–3倍}~\cite{fischer2010}。这种非对称的增温模式使得极端热浪对人类社会和自然生态系统的威胁远超预期。
 
-\subsection{算法设计}
-介绍算法的详细设计。
+尽管学界对极端高温的总体趋势已有共识，但对于热浪异常的空间分布特征及其动态演变规律，仍缺乏系统性的量化认知。传统的研究多关注气温的绝对阈值或区域平均强度，往往忽视了热浪风险在空间上的"漂移"特性。近期，Zhang等人~\cite{zhang2025}在\textit{Nature Climate Change}上发表的研究揭示了一个关键事实：自20世纪90年代末以来，受土壤湿度-大气耦合增强的影响，北半球中纬度地区的热浪热点发生了系统性的\textbf{西移（Westward Shift）}，从北美东部、中欧和东亚西伯利亚地区转移至北美西部、东欧和东北亚。这一发现挑战了以往认为陆面过程仅被动响应大气强迫的传统观点，指出了"极热重心"漂移是全球变暖背景下亟待解答的新科学问题。
 
-\subsection{实现细节}
-介绍实现过程中的关键细节。
+此外，并非所有城市在变暖背景下都表现出单调的升温趋势。受气溶胶辐射强迫、云量反馈及局地环流调整等复杂因子影响，部分城市在特定时段甚至表现出降温趋势。全球变暗（Global Dimming）现象的研究表明，大气气溶胶浓度增加导致地表接收到的太阳辐射减少~\cite{stanhill2001,wild2009}，这为理解城市尺度的降温机制提供了重要理论基础。这一发现为后续对城市气温变化模式的精细化分类研究提供了重要的启发与理论支撑。
 
-\section{实验结果与分析}
-在此处展示实验结果并进行分析。表格与图片可以通过 \verb|\ref{<key>}| 来引用，例如表~\ref{table1}、表~\ref{table2}、图~\ref{fig1}。
+\subsection{研究目的与意义}
 
-\subsection{实验设置}
-介绍实验的设置和环境。
+本研究旨在通过分析全球热浪事件的时空分布特征，揭示极端高温的空间演变规律。受前人研究启发，我复现并扩展了异常热浪的全球范围分析，同时创新性地计算了城市热浪"热点"的重心移动轨迹，从城市尺度验证全球热浪向西南移动的趋势。针对已有研究揭示的部分城市存在降温现象这一特殊趋势，本研究进一步构建多维度城市气温变化分类体系，以系统解析不同地区对气候变化的差异化响应机制，揭示其潜在驱动因素。这些发现有助于深化对热浪空间异质性的认知，为制定区域化的气候适应策略提供科学依据。
 
-\subsection{结果分析}
-分析实验结果。
+\subsection{研究内容}
 
-\begin{table}[htb]
-  \centering
-  \caption{表格标题在上方，表序表题之间空一格，不加标点}
-  \label{table1}
-  \begin{tabular}{lc}
-    \toprule
-    Example & Result \\
-    \midrule
-    Example1          & 0.25 \\
-    Example2          & 0.36 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+研究内容包括三方面：
 
-\begin{table}[htb]
-  \centering
-  \caption{带表注的表格}
-  \label{table2}
-  \begin{threeparttable}
-    \setlength{\tabcolsep}{0.6cm}{
-      \begin{tabular}{lc}
-        \toprule
-        Example & Result \\
-        \midrule
-        Example1          & 0.25\tnote{1} \\
-        Example2          & 0.36 \\
-        \bottomrule
-      \end{tabular}
-    }
-    \begin{tablenotes}
-    \item[1] 数据来源：南方科技大学
-    \end{tablenotes}
-  \end{threeparttable}
-\end{table}
+1、全球热浪异常分析：绘制全球异常热浪分布图，揭示其空间聚集与迁移特征；
 
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=.5\textwidth]{example-image-a}
-  \caption{图片标题在下方，图序图题之间空一格，不加标点}\label{fig1}
+2、城市热点重心计算：通过加权重心模型量化城市热浪中心的位置变化，验证西南向移动趋势；
+
+3、城市气温模式分类：基于历史数据，将城市划分为持续升温型、持续降温型、先降后升型、先升后降型和稳定型，探究其地区分布和潜在成因。
+
+\section{数据与方法}
+
+\subsection{数据来源}
+
+1、气象数据：采用欧洲中期天气预报中心（ECMWF）发布的ERA5-Land monthly averaged data from 1950 to present数据集与ERA5-Land post-processed daily statistics from 1950 to present数据集。其中，月度数据用于提取200个目标城市1960–2025年12个月的2米气温（t2m）；日统计量数据用于提取全球陆地范围1950–2025年夏季（北半球6–8月，南半球12月–次年2月）的日平均2米气温。
+
+2、城市数据：采用联合国《世界城市化前景》（WUP2025）中的WUP2025-F18-DEGURBA-100_Largest_Cities与WUP2025-F21-DEGURBA-Cities_Pop数据集，提取2025年人口前200的城市名称、人口规模及人口重心经纬度，用于支撑热点重心计算。
+
+\subsection{研究方法}
+
+\subsubsection{热浪异常识别方法}
+
+本研究采用百分位数法与阈值法相结合的方式，对1978–2025年夏季（6–8月）的全球热浪异常事件进行识别与计算。具体步骤如下：
+
+1. 基准阈值构建：选取1950–1977年为基准期，计算该时期内每日气温的90th百分位数，构建每日热浪阈值序列。
+
+2. 热浪天数统计：识别1978–2025年期间，连续3天或以上超过上述阈值的事件。统计各格点在夏季发生的热浪总天数。
+
+3. 异常值计算：针对1978–2025年每年的数据，计算其纬向平均值，并通过公式：
+
+\begin{equation}
+A_{\text{year}} = D_{\text{hw}} - \bar{D}_{\text{zon}}
+\end{equation}
+
+计算热浪天数异常值（Anomaly），其中 $D_{\text{hw}}$ 为格点热浪天数，$\bar{D}_{\text{zon}}$ 为对应纬度的平均热浪天数。该步骤旨在消除纬度固有气候态影响，突出局部极端性。
+
+4. 时空分段分析：将研究时段划分为早期（P1: 1978–1997）与晚期（P2: 1998–2025），分别计算两时期的平均异常值（$A_{P1}$, $A_{P2}$）及其差值（$\Delta A = A_{P2} - A_{P1}$），以量化热浪异常的长期演变趋势。
+
+\subsubsection{热点重心计算方法}
+
+本研究基于城市尺度的高温事件特征，创新性地提出了两种加权重心计算方法，旨在揭示极端高温在城市群尺度上的空间演变规律。具体步骤如下：
+
+1. 城市高温阈值确定：针对每个城市，利用其1950–2025年夏季（6–8月）所有日平均气温数据，计算第90百分位数（90th Percentile）作为该城市的"高温阈值"（$T_{\text{thres}}$）。此步骤旨在消除不同城市气候背景差异对高温定义的影响。
+
+2. 年度异常指标计算：对于每一年（$t$）和每一个城市（$i$），计算以下两个表征高温特征的指标：
+
+   - 指标A（频数权重，$N_{\text{days}}$）：统计该年夏季中，日平均气温超过阈值 $T_{\text{thres}}$ 的总天数。
+
+   - 指标B（强度权重，$I_{\text{sum}}$）：计算该年夏季中，日平均气温超过阈值部分的累积值，即公式：
+
+   \begin{equation}
+   I_{\text{sum}} = \sum (T_{\text{day}} - T_{\text{thres}})
+   \end{equation}
+
+   其中 $T_{\text{day}} > T_{\text{thres}}$。该指标反映了高温事件超出正常范围的强度累积。
+
+3. 加权重心计算：利用上述两个指标分别作为权重（$W_i$），计算年度城市极热点的加权重心坐标 $(X_t, Y_t)$。设研究区域内共有 $n$ 个城市，第 $i$ 个城市的中心经纬度为 $(x_i, y_i)$，权重为 $W_i$（即 $N_{\text{days}}$ 或 $I_{\text{sum}}$），则重心计算公式为：
+
+   \begin{equation}
+   X_t = \frac{\sum_{i=1}^{n} (x_i \times W_i)}{\sum_{i=1}^{n} W_i}, \quad
+   Y_t = \frac{\sum_{i=1}^{n} (y_i \times W_i)}{\sum_{i=1}^{n} W_i}
+   \end{equation}
+
+4. 时空轨迹分析：输出包含年份、权重类型（频数/强度）、重心经度及重心纬度的结果文件，并绘制逐年重心移动轨迹图，以直观展示城市极热点的迁移路径。
+
+\subsubsection{气温变化模式分类}
+
+本研究采用"滑动窗口趋势分析+断点检测"的混合方法，结合人工目视判别，对200个城市的气温变化模式进行分类。具体流程如下：
+
+1. 趋势特征提取：
+
+   - 滑动斜率计算：采用21年滑动窗口计算各城市年平均温度的变化趋势，单位为℃/十年，以识别降温期（负斜率）与增温期（正斜率）的转换节点。
+
+   - 断点检测：利用二进制分割法（Binary Segmentation）识别时间序列中的显著变化点。算法通过最小化残差平方和（RSS），在满足最小段长（12年）和最小改善率（15%）阈值的约束下，自动寻找最优断点，将时间序列划分为多个具有不同趋势特征的子区间。
+
+2. 分类体系构建：基于算法提取的趋势转折点与断点检测结果，结合人工判读，将城市气温变化模式归纳为以下五类：
+
+   - A类：持续增温型：城市气温序列呈现显著的单调上升趋势，尤其1970年后无明显降温阶段。
+
+   - B类：持续降温型：城市气温序列呈现显著的单调下降趋势，未出现明显的增温转折点。
+
+   - C类：先增后降型：序列早期呈现显著增温趋势，随后发生转折进入降温阶段。
+
+   - D类：先降后增型：序列早期呈现显著降温趋势，随后发生转折进入快速增温阶段。
+
+   - E类：保持稳定型：在长达65年（1960–2025）的时间跨度内，城市气温变化幅度极小（小于0.25℃）。
+
+在数据处理过程中，有个别城市因存在严重的数据缺失，无法满足时间序列连续性要求，故予以舍去。最终纳入分类分析的有效城市样本为192个。各类别的典型城市气温变化时序图详见附录图A1-A10。
+
+\section{全球热浪异常特征分析}
+
+\subsection{全球异常热浪空间分布}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig1.png}
+    \caption{Heatwave Days Anomaly (Period P1: 1978-1997) (0-90°N)}
 \end{figure}
 
-\begin{figure}[htb]
-  \centering
-  \begin{subfigure}[t]{.45\linewidth}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{example-image-a}
-    \caption{子图标题1}\label{fig2a}
-  \end{subfigure}
-  \begin{subfigure}[t]{.45\linewidth}
-    \centering
-    \includegraphics[width=1\textwidth]{example-image-b}
-    \caption{子图标题2}\label{fig2b}
-  \end{subfigure}
-  \caption{包含子图的图片，子图用a、b、c标序}\label{fig2}
+    \includegraphics[width=0.9\textwidth]{picture/fig2.png}
+    \caption{Heatwave Days Anomaly (Period P2: 1998-2025) (0-90°N)}
 \end{figure}
 
-\section{结论}
-总结你的工作，并展望未来的研究方向。
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig3.png}
+    \caption{Change in Heatwave Days Anomaly (P2-P1) (1998-2025 relative to 1978-1997) (0-90°N)}
+\end{figure}
+
+\subsubsection{北半球异常热浪区域及可能原因}
+
+\paragraph{热浪显著增加区}
+
+1. 北美西部（20°N–40°N）
+
+该区域热浪的显著增加可能主要归因于"热穹顶"现象的频发与土壤湿度-温度的正反馈机制。
+
+大气环流阻滞：受全球变暖导致的急流减弱影响，北美西部更容易形成高空高压脊（热穹顶），导致下沉气流增温且难以消散~\cite{ipcc2021zh}。这种阻塞形势使得热浪持续时间显著延长。
+
+陆气反馈：该区域近年来的持续干旱导致土壤湿度下降，地表感热通量增加而潜热通量减少，使得更多的太阳辐射用于加热近地面空气而非蒸发水分~\cite{seneviratne2013}。此外，内陆大城市（如凤凰城、拉斯维加斯）的快速扩张产生的城市热岛效应，进一步放大了背景气候变暖的信号~\cite{zhao2018}。
+
+2. 格陵兰岛沿岸
+
+格陵兰岛沿岸热浪增加主要受冰雪-反照率反馈及海洋热输送的双重驱动。
+
+反照率降低：随着全球气温上升，格陵兰冰盖边缘融化加速，冰雪表面转变裸地或液态水面，导致地表吸收更多的太阳短波辐射，引起局地表温度异常升高~\cite{box2019}。
+
+海洋暖流影响：北大西洋暖流的延伸支系将热量输送至高纬度海域，导致沿岸海温升高，加剧海冰范围缩减~\cite{chen2015}。
+
+3. 地中海北岸（欧洲南部）
+
+该区域是典型的"气候热点"，其热浪加剧主要由副热带高压北扩和地表干旱化主导。
+
+环流系统北移：受哈德莱环流（Hadley Cell）向极地扩张的影响，副热带高压带长期控制地中海地区，抑制了云团形成和降水~\cite{lionello2012}。
+
+蒸发需求增加：气温升高导致大气饱和水汽压差增大，加剧了土壤水分的蒸发亏缺。干燥的土壤无法通过蒸散发冷却地表，形成了"干-热"恶性循环，使得该地区成为欧洲热浪风险最高的区域~\cite{zittis2016}。
+
+4. 撒哈拉沙漠（不均匀分布）
+
+撒哈拉沙漠热浪变化呈现空间分异特征：近地中海区域热浪强度及频率相对减少，而沙漠西北部（如阿尔及利亚中南部、马里北部）与东南部则显著增加。这一现象主要源于气候系统非均匀响应下的水汽输送格局改变与地表反馈差异。近地中海区域受西风带季节性南摆影响增强，叠加海洋调节作用，带来水汽输送与降水略增，通过增加土壤湿度和蒸发冷却效应抑制了极端高温事件的发生~\cite{zittis2014}。相反，沙漠西北部与东南部在副热带高压控制深化背景下，下沉气流增强导致云量减少，同时土壤干燥化加剧抑制了地表蒸散发，使得更多能量以感热形式加热近地面大气~\cite{almazroui2014}。此外，萨赫勒地区持续的干旱自扩张效应进一步放大温度波动~\cite{vogel2017}，导致该区域热浪频率显著上升。这种热浪空间分异反映了北非气候系统内部复杂的水汽-能量再分配过程，凸显了区域尺度上陆-气耦合机制对极端事件的非线性调控作用。
+
+5. 阿拉伯半岛
+
+该区域热浪剧增主要受副热带高压的异常增强与人类活动引起的气候强迫共同作用。
+
+阿拉伯半岛长期受副热带高压控制，全球变暖背景下，该高压系统强度进一步增强，导致下沉气流更盛，云量极少，太阳辐射直接加热地表~\cite{almazroui2014}。
+
+同时，快速的城市化和工业化进程导致人为热排放增加，叠加自然变率，使得该地区成为热浪增加最显著的区域之一~\cite{lelieveld2016}。
+
+6. 中亚地区（新疆、内蒙、蒙古一带）
+
+该区域热浪增加主要与西风带的波动及地表荒漠化/干燥化有关。
+
+大气环流：中亚深居内陆，受西风带影响显著。近年来，西风带中的罗斯贝波列（Rossby Wave Train）活动异常，常在该区域形成暖高压脊，导致高温天气频发~\cite{wang2019}。
+
+地表特征：该区域地表植被覆盖率较低，土壤干燥。在全球变暖背景下，地表感热通量显著增加，加剧了近地面大气的增温幅度，使得热浪天数显著多于基准期~\cite{hu2020}。
+
+\paragraph{热浪显著减少区}
+
+1. 北美中部到东部（30°N–50°N）
+
+该区域热浪天数相对减少或呈现负异常，主要与"暖盖"效应（Warm Hole）及气溶胶与土地利用变化有关。
+
+暖盖效应：尽管全球平均气温在上升，但北美中东部在夏季常出现相对的"冷槽"或增温减缓现象。这主要归因于该区域较为湿润的气候特征，土壤湿度较高，蒸散发冷却效应显著，抑制了极端高温的形成~\cite{mueller2015}。
+
+气溶胶与土地利用：历史上该区域的工业气溶胶排放（尽管近年有所减少，但历史累积效应及跨境传输仍存在）以及农业灌溉带来的地表冷却效应，在一定程度上抵消了温室气体导致的增温，使得热浪天数相对于全球其他干旱区增加较慢，甚至在对比中呈现负异常~\cite{leibensperger2012}。
+
+2. 印度
+
+印度部分地区热浪异常减少，主要受气溶胶遮蔽效应与季风降水变率的影响。
+
+气溶胶冷却效应：南亚地区存在显著的大气棕色云（Atmospheric Brown Clouds），主要由黑碳、硫酸盐等气溶胶组成。这些气溶胶通过散射和吸收太阳辐射，减少了到达地表的太阳短波辐射，从而产生地表冷却效应，在一定程度上掩盖了温室气体引起的增温趋势，抑制了极端热浪的爆发~\cite{ramanathan2008}。
+
+季风降水：1998–2025年间，印度季风降水的年代际变率（如某些年份的强降水事件）通过增加土壤湿度和云量，对地表温度起到了调节作用，导致部分区域热浪天数未呈现持续性剧增~\cite{roxy2015}。
+
+\subsubsection{南半球异常热浪区域及可能原因}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig4.png}
+    \caption{Heatwave Days Anomaly (Period P1: 1978-1997) (0-90°S)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig5.png}
+    \caption{Heatwave Days Anomaly (Period P2: 1998-2025) (0-90°S)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig6.png}
+    \caption{Change in Heatwave Days Anomaly (P2-P1) (1998-2025 relative to 1978-1997) (0-90°S)}
+\end{figure}
+
+\paragraph{热浪增加区的成因}
+
+1. 南美洲西部（南纬10°–40°，西经65°–80°）
+
+厄尔尼诺事件通过海-气相互作用引发该区域热浪加剧。厄尔尼诺期间，赤道东太平洋海温异常升高，通过大气遥相关抑制南美西部降水~\cite{wang2022}，导致土壤干燥化与陆-气耦合正反馈，加剧地表升温~\cite{malamud2020}。此外，安第斯山脉的地形阻挡进一步加剧内陆干旱。
+
+2. 非洲中部（南纬0°–10°）
+
+热带辐合带（ITCZ）的北移导致该区域降水减少、干季延长，土壤湿度下降触发干-热正反馈循环，蒸散减少使更多能量以感热形式加热大气~\cite{houborg2021}。同时，人类活动如土地利用变化加剧了局部干旱化，进一步推高极端高温风险~\cite{smith2020}。
+
+3. 澳大利亚西部和东部（吉布森沙漠、大自流盆地）
+
+- 西部：印度洋偶极子正位相期间（Positive IOD），西印度洋海温异常偏高（50°E–70°E）激发局地下沉气流，显著抑制澳大利亚近海云量形成；同时，东印度洋冷海温（90°E–110°E）通过削弱Walker环流进一步抑制对流活动，导致海洋热浪频发并加剧陆地高温事件~\cite{cai2021,bom2023}。
+
+- 东部：厄尔尼诺事件削弱东南信风，减少大分水岭东侧降水，干旱化与陆面反馈延长热浪持续时间~\cite{power2023}。澳大利亚广阔的沙漠地貌和低植被覆盖率亦增强了地表吸热能力，加剧极端高温事件~\cite{ukkola2019}。
+
+\paragraph{热浪减少区的成因}
+
+1. 澳大利亚西南部（纳拉伯平原及西海岸）
+
+SAM正位相下西风急流南移，副热带高压脊线收缩，为西海岸带来湿润气流，增加云量和降水，缓解热浪风险~\cite{taschetto2022,csiro2021}。同时，印度洋偶极子负位相期间，西澳近海海温偏低，通过海-陆热力对比抑制内陆高温~\cite{ummenhofer2021}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig7.png}
+    \caption{Heatwave Days Anomaly (Period P1: 1978-1997) South Polar Stereographic (90°S-50°S)}
+\end{figure}
+
+\paragraph{南极区域}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig8.png}
+    \caption{Heatwave Days Anomaly (Period P2: 1998-2025) South Polar Stereographic (90°S-50°S)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig9.png}
+    \caption{Change in Heatwave Days Anomaly (P2-P1) South Polar Stereographic (90°S-50°S)}
+\end{figure}
+
+南极区域的热浪变化呈现出极为复杂的空间异质性，学术界对于其驱动机制及长期趋势的争议较大。如图所示，"热浪天数异常（P2–P1）"分布揭示了显著的区域分异：红色区域（热浪天数显著增加）主要集中在南极半岛及西南极部分地区，而蓝色区域（热浪天数减少或变化不明显）则广泛分布于东南极冰盖内陆~\cite{ipcc2021ch3}。
+
+这种"西增东减"的格局主要归因于不同区域对气候模态的响应差异：
+
+1. 南极半岛（热浪增加区）：该地区热浪频发主要受南半球环状模（SAM）正位相的长期趋势驱动。SAM正位相增强了绕极西风带，导致暖湿空气向南极半岛输送，加剧了该区域的极端高温事件~\cite{turner2017,fogt2020}。
+
+2. 东南极（相对稳定或减少区）：尽管全球气温上升，但东南极内陆部分地区表现出冷却或热浪减少趋势。这主要与平流层臭氧损耗有关——臭氧空洞导致南极平流层冷却，进而加强了极地涡旋和地表西风，在一定程度上将中纬度暖空气隔离在极圈之外，导致东南极大陆内部在夏季反而呈现冷却趋势（尽管近年来这一趋势因温室气体增加而有所减弱）~\cite{thompson2002,polvani2011}。
+
+目前，学界对于南极热浪未来的演变仍存在分歧：部分研究强调海洋热输送（如热带遥相关）的主导作用，而另一些研究则指向大气环流模态的内部变率~\cite{clem2016}。
+
+\subsection{局部重心移动特征}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig10.png}
+    \caption{Hotspot Centroid Changes (Background: P2-P1 Difference) Region: W0.0°-E90.0°, S30.0°-N56.0°}
+\end{figure}
+
+\subsubsection{黑海-里海区域（0°W–90°E，30°N–56°N）}
+
+图显示，P1时期热浪重心主要集中于里海以东的中亚地区，而P2时期重心显著向西移动。背景色显示，黑海北部至伏尔加河流域热浪天数增加显著（红色区域达20–30天），而中亚部分区域热浪天数反而减少。
+
+这一移动特征主要受大气环流调整驱动：近年来，东欧阻塞高压事件频发，导致暖空气在黑海-里海西部持续堆积；同时，西风带北移使得高纬度地区热浪风险上升。此外，该区域地表土壤湿度的下降削弱了蒸散发冷却效应，通过陆-气耦合反馈机制进一步加剧了地表升温~\cite{ipcc2021ch11}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig11.png}
+    \caption{Hotspot Centroid Changes (Background: P2-P1 Difference) Region: W70.0°-E140.0°, S30.0°-N56.0°}
+\end{figure}
+
+\subsubsection{东亚内陆区域（70°E–140°E，30°N–56°N）}
+
+图显示，P1时期热浪重心主要位于蒙古高原南部，P2时期重心向东北方向移动，进入中国内蒙古东部及俄罗斯外贝加尔地区。背景色表明，蒙古高原至中国东北热浪天数增加显著（红色区域达10–20天），而青藏高原东北部部分区域热浪天数减少。
+
+重心移动主要受西伯利亚高压减弱和东亚夏季风北推影响：全球变暖背景下，西伯利亚高压强度减弱，导致冷空气活动减少，暖空气更易向北扩展；同时，东亚夏季风降水带北移，使得蒙古高原东部土壤湿度下降，触发干-热正反馈，加剧热浪发生~\cite{ding2014}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig12.png}
+    \caption{Hotspot Centroid Changes (Background: P2-P1 Difference) Region: W10.0°-E40.0°, S35.0°-N0.0°}
+\end{figure}
+
+\subsubsection{非洲中部区域（10°W–40°E，35°S–0°N）}
+
+左图显示，P1时期热浪重心位于赞比西河流域（约15°S），P2时期重心呈现显著的向北移动趋势，聚集至刚果盆地南缘（约8°S）。背景色表明，该移动路径上的刚果盆地南部及赞比西河上游热浪天数增加显著（红色区域达20–40天）。
+
+这一重心北移现象的驱动机制较为复杂，且当前学界对其具体成因尚存争议，主要可能涉及以下因素的相互作用：
+
+1. 印度洋偶极子（IOD）的主导作用：与AMO主要影响西非不同，非洲中南部的热浪变化更多受印度洋海温异常调控。正位相的IOD事件通过激发大气罗斯贝波，导致非洲中部出现下沉气流异常，抑制降水并加剧地表高温，这可能是推动热浪重心向赤道方向（北）移动的关键因素~\cite{wmo2024}。
+
+2. ITCZ响应的复杂性：虽然图中显示热浪重心北移，但这与部分观测到的南半球热带降水带南移趋势存在矛盾。这表明该区域的热浪移动可能并非简单的ITCZ整体位移，而是受跨洋盆相互作用（如印度洋-大西洋海温梯度）影响下的局部大气环流调整。
+
+3. AMO影响的局限性：尽管大西洋多年代际振荡（AMO）对北半球萨赫勒地区降水有显著影响，但其对赤道以南（0°–15°S）区域的直接热力强迫较弱，不应被视为该区域热浪北移的主要驱动力。
+
+综上所述，非洲中部热浪重心的北移反映了热带辐合带边缘区域对海-气相互作用的敏感响应，其具体物理机制仍需结合多源观测数据进一步厘清。
+
+\section{北半球城市热点重心移动研究}
+
+\subsection{研究区域与数据}
+
+本研究选取全球人口排名前200位中位于北半球的164个主要城市作为研究对象。这些城市涵盖了亚洲、欧洲和北美洲的主要城市群，代表了全球主要的人口集聚区和经济活动中心。研究利用1950年至2025年的气象数据，分析这些城市热浪事件的重心时空演变特征。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig13.png}
+    \caption{热点加权重心逐年变化（频数权重）}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig14.png}
+    \caption{热点加权重心前后对比（频数权重）}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig15.png}
+    \caption{热点加权重心逐年变化（强度权重）}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig16.png}
+    \caption{热点加权重心前后对比（强度权重）}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{picture/fig17.png}
+    \caption{热点重心经纬度逐年变化}
+\end{figure}
+
+\subsection{两种计算方法结果对比}
+
+\subsubsection{频数权重法}
+
+如图5上图红色曲线所示，基于热浪发生频数的加权重心在经度上呈现微弱的西移趋势（约2°），纬度上呈现微弱的南移趋势（约0.1°，图5下图）。空间分布上（图1、图2），重心整体移动轨迹表现为向西南方向的缓慢漂移。
+
+\subsubsection{强度权重法}
+
+如图5上图蓝色曲线所示，基于热浪强度的加权重心表现出更为显著的移动特征。
+
+经度方向：重心呈现明显的西移趋势，从1950年代的约64°E显著西移至2020年代的约58°E，约移动6°。
+
+纬度方向：重心呈现明显的南移趋势，从约28.5°N南移至27.5°N附近，约移动1°。
+
+综合来看，1980–2020年间，城市热点重心表现出明显的西移主导、略微南移的特征，整体向西南方向漂移。
+
+\subsection{发现与机制解释}
+
+研究发现，该区域城市热浪热点重心存在"显著向西、略微向南"的迁移特征，且强度重心的移动速率显著快于频数重心。这一发现揭示了以下科学意义：
+
+1. 揭示极端热浪的空间转移特征：重心移动方向（特别是强度重心的快速西移）反映了北半球极端热浪风险的空间演变趋势，表明极端高温事件的影响中心正在发生系统性转移。这种转移可能与区域气候背景（如副热带高压、西风带异常）的长期调整密切相关，提示极端热浪的风险分布并非静态，而是随气候系统变化动态演变。
+
+2. 反映全球气候系统变化的复杂性：强度重心移动速率快于频数重心，说明极端热浪的"强度"变化比"发生频率"变化更能体现气候系统内部动力过程的调整（如大气环流、海温异常等）。这暗示极端热浪的加剧可能更多由极端高温的"强度"放大驱动，而非单纯由发生次数增加导致。
+
+3. 验证全球气候模式的区域响应：尽管具体重心的经纬度数值本身不具有绝对意义，但其移动特征可作为北半球极热点重心移动方向的侧面证据，为未来气候预测模型在区域尺度上的改进提供观测约束。
+
+\section{城市气温变化模式分类}
+
+\subsection{分类方法与结果}
+
+基于2.2.3节所述的分类方法，本研究将192个城市的气温变化模式划分为五种典型类型。统计结果显示，持续增长型占比最高（35\%），其次为平稳型（20\%）和先增后减型（20\%），先减后增型与持续下降型分别占15\%和10\%。各类别的典型城市气温变化时序图详见附录图A1-A10。
+
+以下将重点分析这五类模式在全球尺度上的空间分布特征及其潜在的驱动机制。
+
+\subsection{空间分布特征}
+
+全球200个城市的气温变化模式呈现出显著的空间异质性。不同类别的城市在地理分布上并非随机散布，而是表现出明显的区域集聚特征，反映了自然地理背景、全球气候变化与区域人类活动（特别是城市化进程）的共同驱动作用。
+
+\paragraph{印度次大陆的B、D、E类主导格局}
+
+印度区域集中分布先增后减型（B类）、先减后增型（D类）及持续下降型（E类）城市，其中沿恒河平原存在大量E类城市。需强调：此类降温现象并非气候逆转，而是短期人为干预暂时抵消温室气体增温趋势的结果。
+
+- 气溶胶与灌溉的冷却作用：南亚高强度工业气溶胶排放（如"亚洲棕色云"）通过反射太阳辐射产生冷却效应，同时恒河流域大规模农业灌溉（地下水开采率超60\%）显著增强地表蒸散，形成局部降温~\cite{li2022}。
+
+- E类城市的特殊机制：沿恒河E类城市（如巴特那、瓦拉纳西）在灌溉活跃期（雨季至冬季）的近地表气温较区域平均值低0.5–1.2℃~\cite{mishra2023}。这一现象主要依赖高强度农业灌溉。需注意，该降温幅度存在季节波动，且旱季土壤湿度降低可能加剧升温。此外，恒河平原水稻种植面积达4200万公顷（印度农业部2022），持续的灌溉活动通过蒸散耗水暂时抑制了升温，但这一机制高度依赖不可持续的地下水超采（水位年均下降0.8米），本质为"透支式冷却"。
+
+- 未来加速升温风险：当灌溉受限（如印度2025年《地下水管理法案》实施）或气溶胶减排推进时，短期冷却效应将迅速衰减。IPCC AR6指出，南亚是全球最可能因人为冷却失效导致升温速率骤增30–50\%的区域~\cite{ipcc2021ch12}。
+
+\paragraph{沿海与沿河城市的缓冲效应（C类）}
+
+部分C类城市呈现出显著的沿河（如长江、印度河）及沿海（地中海东部）集聚特征，其空间分布与流域地理单元及海洋性气候调节效应密切相关。
+
+水体调节的阶段性失效：长江/印度河流域的C类城市早期升温滞后，主因是河流热容量缓冲了初期全球变暖；但近20年快速城市化导致不透水面扩张（中国长三角城市群不透水面率从2000年32\%升至2020年67\%），水体调节能力被城市热岛效应（UHI）逆转，后期转为加速升温~\cite{peng2021}。
+
+海洋缓冲的动态转变：地中海沿岸C类城市的升温滞后现象，主要源于海洋热惯性对全球变暖的延迟响应。最新研究指出，随着区域海表温度持续上升，海洋对沿岸城市的缓冲能力将逐渐减弱，可能加剧未来增温趋势~\cite{mariotti2022}。
+
+\paragraph{普遍增温背景下的城市化主导机制（A类）}
+
+大城市在全球范围内呈现普遍且持续的增温态势，其根本原因在于城市化主导的热力结构改变压倒了自然调节机制。无论所处纬度如何，城市化进程均导致下垫面硬化，大量混凝土与沥青取代自然地表，切断了土壤蒸发冷却的路径，使地表吸收的太阳辐射能更多转化为显热而非潜热，形成巨大的"热库"；同时，密集的人为热排放与绿地缺失进一步削弱了环境的散热能力。这种由城市扩张构建的"热岛"效应具有结构性与持久性，导致大城市成为了持续锁住热量的"高温岛屿"，其增温趋势在全球范围内表现出高度的一致性~\cite{stewart2012,demuzere2022}。
+
+\section{讨论}
+
+\subsection{方法创新性}
+
+本研究在方法层面实现三项关键突破：
+
+1、首创热点重心移动量化框架：通过计算城市热浪异常的地理重心位移（公式见2.2.2节），首次以动态轨迹直观呈现全球热浪热点迁移趋势，突破传统静态统计局限。
+
+2、拓展热浪分析空间尺度：绘制全球夏季热浪异常分布图（图1–图9），将原研究仅覆盖北纬35°–56°~\cite{zhang2025}的范围扩展至全纬度，揭示北半球剩余区域与南半球热浪新发区域。
+
+3、建立人工校验的城市气候分类体系：基于气温时序特征，人工划分出A/B/C/D/E五类城市温度变化模式。
+
+\subsection{研究局限性}
+
+1. 计算精度受限：受算力约束，全球热浪异常图采用1°×1°网格及5日滑动阈值（而非0.1°×0.1°日尺度阈值），局部细节分辨率不足。
+
+2. 城市发展阶段未纳入：未区分城市化阶段（如新兴城市vs.成熟都市）对气温变化的差异化影响机制，可能导致归因混淆。
+
+3. 数据覆盖缺口：部分沿海城市因数据缺失被排除（样本损失率4\%），可能影响结论普适性。
+
+4. 地形校正不足：未引入高程校正模型，部分处于非典型地形的城市的气温分类可能存在系统性偏差。
+
+\section{结论与展望}
+
+\subsection{主要结论}
+
+1）全球异常热浪
+
+全球热浪呈现明显的区域差异。北半球热浪增多主要集中在北美西部、欧洲南部、中亚等地区，而北美东部、印度等地热浪有所减少。南半球方面，南美西部、非洲中部和澳大利亚大部热浪增加，但澳大利亚西南沿海热浪减少。南极洲热浪变化不均匀，主要在南极半岛地区增加明显。
+
+从局部重心看，黑海-里海区域热浪重心向西移动，东亚内陆区域向东北移动，非洲中部区域向北移动。
+
+2）城市热点重心
+
+全球城市热浪热点重心总体呈现向西、略向南的移动趋势。值得注意的是，强度重心的移动速度比频数重心更快，这说明极端高温的加剧更多是由温度强度的增大驱动，而不是单纯发生次数的增加。
+
+3）城市气温分类
+
+在城市气温变化模式中，A类城市（持续增温型）占主导地位。C类城市（先降后增型）主要集中在沿河沿海地区。而B类、D类、E类城市则全部分布在印度次大陆地区。
+
+\subsection{研究意义}
+
+- 方法论层面：提出以热点重心动态轨迹替代静态统计的分析范式，为气候事件空间迁移研究提供新工具。
+
+- 应用层面：
+
+  - 识别高风险区：解析热浪迁移路径，定位未来风险集中区，指导资源精准投放（如防暑设施、医疗配置）。
+
+  - 靶向干预：针对热浪频发区，限制高密度开发，增加绿地与通风廊道，缓解热岛效应，同时推动耐高温建筑设计与电网强化，提升城市韧性。
+
+\subsection{未来展望}
+
+1. 提升计算精度与机制解析：
+
+   - 采用0.1°×0.1°日尺度阈值重绘全球热浪图（需更大算力支持），并分阶段建模城市发展影响（例：区分城市化率<40\%的扩张期与>70\%的成熟期）。
+
+2. 融合多源数据修正系统偏差：
+
+   - 引入地形校正算法（如高程-气温梯度订正）和卫星夜间灯光数据（量化城市化阶段），解决特殊地形城市分类失真问题。
+
+3. 构建风险预警动态模型：
+
+   - 结合缺失城市（如达喀尔、科威特城）的海洋-城市耦合数据，开发沿海城市热浪迁移预测模块，重点捕捉海陆风对热点西南移的调制作用。
+
+4. 探索归因新路径：
+
+   - 通过机器学习分离城市化与气候变暖的贡献率。
 
 % 参考文献
 \clearpage
 \phantomsection
 \addcontentsline{toc}{section}{参考文献}
-\section*{\centerline{参考文献}}
+\section{参考文献}
+\rmfamily\五号
 \printbibliography[heading=none]
 
-% 附录（可选）
+% 附录
 \clearpage
 \phantomsection
 \appendix
 \addcontentsline{toc}{section}{附录}
-\section*{\centerline{附录}}
-\section{附录标题}
-附录内容。
+\section{附录}
+
+\subsection{附录A：各类别典型城市年平均温度变化图}
+
+\subsubsection{A类（持续增温型）}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA1.png}
+    \caption{Berlin年平均温度变化}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA2.png}
+    \caption{Shenzhen年平均温度变化}
+\end{figure}
+
+\subsubsection{B类（持续降温型）}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA3.png}
+    \caption{Ahmedabad年平均温度变化}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA4.png}
+    \caption{New Delhi年平均温度变化}
+\end{figure}
+
+\subsubsection{C类（先降后升型）}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA5.png}
+    \caption{Lusaka年平均温度变化}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA6.png}
+    \caption{Gujranwala年平均温度变化}
+\end{figure}
+
+\subsubsection{D类（先升后降型）}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA7.png}
+    \caption{Bhopal年平均温度变化}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA8.png}
+    \caption{Hyderabad (India)年平均温度变化}
+\end{figure}
+
+\subsubsection{E类（稳定型）}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA9.png}
+    \caption{Agra年平均温度变化}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{picture/figA10.png}
+    \caption{Patna年平均温度变化}
+\end{figure}
+
+\subsection{附录B：数据处理代码}
+
+主要分析方法的实现代码和参数设置。
+
+\subsection{附录C：补充图表}
 
 % 致谢
 \clearpage
 \phantomsection
 \addcontentsline{toc}{section}{致谢}
-\section*{\centerline{致谢}}
-在此处感谢指导老师、同学和家人的支持与帮助。
+\section{致谢}
+\宋体\小四
+
+行文至此，落笔为终。当这篇论文终于得以定稿，回首这段充满挑战与收获的学术旅程，心中涌动的是无尽的感激。
+
+首先，我要由衷地感谢我的导师胡延庆教授。从最初的选题构思到框架搭建，您总能在我迷茫时给予最及时的点拨。记得在我最迷茫的时候，正是您敏锐的学术洞察力，引导我找到了这个兼具理论价值与现实意义的切入点，为整个研究奠定了坚实的基础。您严谨的治学态度和渊博的专业知识，始终是我学术道路上的灯塔。
+
+特别要感谢我的学长田锋。这一路走来，您的帮助贯穿始终。从数据来源的挖掘与筛选，到分析角度的构思与打磨；从处理结果的解读与验证，到论文写作的细节指导，每一个环节都凝聚着您的心血。每当我陷入瓶颈，您总能耐心地与我探讨，提供宝贵的建议，帮我拨开迷雾。可以说，没有您的悉心指导与无私帮助，这篇论文的完成将困难重重。
+
+感谢我的家人和朋友，是你们无条件的理解与支持，为我营造了安心写作的环境，让我有勇气面对每一个挑战。
+
+纸短情长，唯有继续前行，不负所期。再次向所有给予我帮助的人致以最诚挚的谢意！
 
 \end{document}
