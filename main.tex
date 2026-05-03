@@ -22,7 +22,15 @@
 \usepackage{xcolor}
 \usepackage{etoolbox}
 \usepackage{enumitem}
-\usepackage[backend=biber,style=gb7714-2015,gbpunctin=false,sorting=none,gbsuper=true]{biblatex}
+\usepackage[backend=biber,style=gb7714-2015,gbpunctin=false,sorting=none]{biblatex}
+
+% 定义无方括号的上角标引用命令
+\DeclareCiteCommand{\upcite}[\mkbibsuperscript]
+  {\usebibmacro{cite:init}}
+  {\usebibmacro{citeindex}%
+   \printfield{labelnumber}}
+  {\multicitedelim}
+  {}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 
 % 参考文献资源文件
