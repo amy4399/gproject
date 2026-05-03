@@ -22,7 +22,13 @@
 \usepackage{xcolor}
 \usepackage{etoolbox}
 \usepackage{enumitem}
+\usepackage{url}
 \usepackage[backend=biber,style=gb7714-2015,gbpunctin=false,sorting=none]{biblatex}
+
+% 允许URL在任意位置换行
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
 
 % 定义无方括号的上角标引用命令
 \DeclareCiteCommand{\upcite}[\mkbibsuperscript]
@@ -769,12 +775,10 @@
 \clearpage
 \phantomsection
 \appendix
-\addcontentsline{toc}{section}{附录}
-\section{附录}
+\addcontentsline{toc}{section}{附录A}
+\section{附录A\quad 各类别典型城市年平均温度变化图}
 
-\subsection{附录A：各类别典型城市年平均温度变化图}
-
-\subsubsection{A类（持续增温型）}
+\subsection{A1\quad A类（持续增温型）}
 
 \begin{figure}[htbp!]
     \centering
@@ -788,7 +792,7 @@
     \caption{Shenzhen年平均温度变化}
 \end{figure}
 
-\subsubsection{B类（持续降温型）}
+\subsection{A2\quad B类（持续降温型）}
 
 \begin{figure}[htbp!]
     \centering
@@ -802,7 +806,7 @@
     \caption{New Delhi年平均温度变化}
 \end{figure}
 
-\subsubsection{C类（先降后升型）}
+\subsection{A3\quad C类（先降后升型）}
 
 \begin{figure}[htbp!]
     \centering
@@ -816,7 +820,7 @@
     \caption{Gujranwala年平均温度变化}
 \end{figure}
 
-\subsubsection{D类（先升后降型）}
+\subsection{A4\quad D类（先升后降型）}
 
 \begin{figure}[htbp!]
     \centering
@@ -830,7 +834,7 @@
     \caption{Hyderabad (India)年平均温度变化}
 \end{figure}
 
-\subsubsection{E类（稳定型）}
+\subsection{A5\quad E类（稳定型）}
 
 \begin{figure}[htbp!]
     \centering
@@ -843,12 +847,6 @@
     \includegraphics[width=0.8\textwidth]{picture/A10.png}
     \caption{Patna年平均温度变化}
 \end{figure}
-
-\subsection{附录B：数据处理代码}
-
-主要分析方法的实现代码和参数设置。
-
-\subsection{附录C：补充图表}
 
 % 致谢
 \clearpage
