@@ -125,11 +125,10 @@
 }
 
 % 章节标题间距
-\titlespacing{\section}{0pt}{15.6pt}{.3ex plus .0ex}
+\titlespacing{\section}{0pt}{\baselineskip}{.3ex plus .0ex}
 \titlespacing{\subsection}{0pt}{1.2ex plus .0ex minus .0ex}{.3ex plus .0ex}
 
-% 行距设置
-\renewcommand{\baselinestretch}{1.72}
+% 行距设置 - 1.5倍
 \usepackage[MSWordLineSpacingMultiple=1.5]{zhlineskip}
 
 % 页眉页脚设置
@@ -194,14 +193,14 @@
 \newcommand{\tTitleEn}{Global Heatwave Anomaly Characteristics and Urban Hotspot Centroid Shift Research}
 \newcommand{\tSubtitle}{}
 \newcommand{\tSubtitleEn}{}
-\newcommand{\tAuthor}{你的姓名}
-\newcommand{\tStudentID}{12345678}
-\newcommand{\tDepartment}{某某系}
-\newcommand{\tDepartmentEn}{Department of XXX}
-\newcommand{\tMajor}{某某专业}
-\newcommand{\tMajorEn}{XXX Program}
-\newcommand{\tAdvisor}{指导教师姓名}
-\newcommand{\tAdvisorEn}{Advisor Name}
+\newcommand{\tAuthor}{杨玥祺}
+\newcommand{\tStudentID}{12211056}
+\newcommand{\tDepartment}{统计与数据科学系}
+\newcommand{\tDepartmentEn}{Department of Statistics and Data Science}
+\newcommand{\tMajor}{数据科学与大数据技术}
+\newcommand{\tMajorEn}{Data Science and Big Data Technology}
+\newcommand{\tAdvisor}{胡延庆}
+\newcommand{\tAdvisorEn}{Hu Yanqing}
 \newcommand{\tKeywords}{热浪异常；城市热点；重心移动；气温分类；气候变化}
 \newcommand{\tKeywordsEn}{Heatwave anomaly; Urban hotspot; Centroid movement; Temperature classification; Climate change}
 % =====================================
@@ -224,8 +223,8 @@
 
     \vskip 4.55cm
     \begin{flushright}
-        \makebox[11em][l]{作者签名:}\\
-        \makebox[11em][l]{\下划线[2cm]{}年\下划线[1cm]{}月\下划线[1cm]{}日}
+        \makebox[11em][l]{作者签名:杨玥祺}\\
+        \makebox[11em][l]{\下划线[2cm]{2026}年\下划线[1cm]{5}月\下划线[1cm]{1}日}
     \end{flushright}
 \end{spacing}
 \restoregeometry
@@ -251,7 +250,7 @@
 \begin{spacing}{1.45}
     \noindent\黑体\三号 [摘要]：
     \宋体\四号
-    全球气候变暖背景下，极端高温事件频发，但热浪异常的空间分布特征及其动态演变规律尚缺乏系统性量化认知。本研究基于ERA5-Land再分析数据与联合国城市数据，对1978–2025年全球热浪异常特征及北半球164个主要城市热点的重心移动规律进行了系统分析。结果表明：全球热浪异常呈现显著的空间异质性，北美西部、地中海北岸及阿拉伯半岛等地热浪显著增加，而北美中东部及印度部分地区受气溶胶与灌溉冷却效应影响呈现异常减少；在城市尺度上，热浪热点重心呈现显著的"向西、略向南"移动趋势，且强度重心的移动速率快于频数重心；此外，全球城市气温变化模式可分为五类，其中持续增温型（A类）占主导地位，而印度次大陆城市因人为冷却机制表现出先降后增或持续降温等特殊模式。本研究揭示了全球热浪风险的动态转移特征，为理解气候变化背景下的城市适应性策略提供了科学依据。
+    全球气候变暖背景下，极端高温事件频发，但热浪异常的空间分布特征及其动态演变规律尚缺乏系统性量化认知。本研究基于ERA5-Land再分析数据与联合国城市数据，对1978–2025年全球热浪异常特征及北半球164个主要城市热点的重心移动规律进行了系统分析。结果表明：全球热浪异常呈现显著的空间异质性，北美西部、地中海北岸及阿拉伯半岛等地热浪显著增加，而北美中东部及印度部分地区受气溶胶与灌溉冷却效应影响呈现异常减少；在城市尺度上，热浪热点重心呈现出显著的“向西、略向南”移动趋势，且强度重心的移动速率快于频数重心；此外，全球城市气温变化模式可分为五类，其中持续增温型（A类）占主导地位，而印度次大陆城市因人为冷却机制表现出先降后增或持续降温等特殊模式。本研究揭示了全球热浪风险的动态转移特征，为理解气候变化背景下的城市适应性策略提供了科学依据。
 
     \vfill
     \noindent\黑体\三号 [关键词]：
@@ -292,7 +291,7 @@
 
 尽管学界对极端高温的总体趋势已有共识，但对于热浪异常的空间分布特征及其动态演变规律，仍缺乏系统性的量化认知。传统的研究多关注气温的绝对阈值或区域平均强度，往往忽视了热浪风险在空间上的"漂移"特性。近期，Zhang等人~\cite{zhang2025}在\textit{Nature Climate Change}上发表的研究揭示了一个关键事实：自20世纪90年代末以来，受土壤湿度-大气耦合增强的影响，北半球中纬度地区的热浪热点发生了系统性的\textbf{西移（Westward Shift）}，从北美东部、中欧和东亚西伯利亚地区转移至北美西部、东欧和东北亚。这一发现挑战了以往认为陆面过程仅被动响应大气强迫的传统观点，指出了"极热重心"漂移是全球变暖背景下亟待解答的新科学问题。
 
-此外，并非所有城市在变暖背景下都表现出单调的升温趋势。受气溶胶辐射强迫、云量反馈及局地环流调整等复杂因子影响，部分城市在特定时段甚至表现出降温趋势。全球变暗（Global Dimming）现象的研究表明，大气气溶胶浓度增加导致地表接收到的太阳辐射减少~\cite{stanhill2001,wild2009}，这为理解城市尺度的降温机制提供了重要理论基础。这一发现为后续对城市气温变化模式的精细化分类研究提供了重要的启发与理论支撑。
+此外，\textbf{并非所有城市在变暖背景下都表现出单调的升温趋势}。受气溶胶辐射强迫、云量反馈及局地环流调整等复杂因子影响，部分城市在特定时段甚至表现出降温趋势。全球变暗（Global Dimming）现象的研究表明，大气气溶胶浓度增加导致地表接收到的太阳辐射减少~\cite{stanhill2001,wild2009}，这为理解城市尺度的降温机制提供了重要理论基础。这一发现为后续对城市气温变化模式的精细化分类研究提供了重要的启发与理论支撑。
 
 \subsection{研究目的与意义}
 
